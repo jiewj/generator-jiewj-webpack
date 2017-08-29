@@ -51,42 +51,46 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    mkdirp('src');
     let readmeTpl = _.template(this.fs.read(this.templatePath('README.md')));
     this.fs.write(this.destinationPath('readmeTest.md'), readmeTpl({
       generatorName: 'generator-jiewj-webpack',
       yoName: 'jiewj-webpack'
     }));
-    // let pkg = this.fs.readJSON(this.templatePath('package_tmpl.json'), {});
-    //
-    // pkg.keywords = pkg.keywords || [];
-    // pkg.keywords.push('generator-jiewj-webpack');
-    //
-    // pkg.name = this.props.projectName;
-    // pkg.description = this.props.projectDesc;
-    // pkg.main = this.props.projectMain;
-    // pkg.author = this.props.projectAuthor;
-    // pkg.license = this.props.projectLicense;
-    //
-    // this.fs.writeJSON(this.destinationPath('test.json'), pkg);
 
-    // mkdirp('src');
+    let indexTpl = _.template(this.fs.read(this.templatePath('index_tmpl.html')));
+    this.fs.write(this.destinationPath('src/index.html'), indexTpl({
+      title: this.props.projectName
+    }));
+    let pkg = this.fs.readJSON(this.templatePath('package_tmpl.json'));
 
-    // this.fs.copy(
-    //   this.templatePath('config'),
-    //   this.destinationPath('config')
-    // )
-    // this.fs.copy(
-    //   this.templatePath('gitignore_tmpl'),
-    //   this.destinationPath('.gitignore')
-    // );
-    // this.fs.copy(
-    //   this.templatePath('babelrc_tmpl'),
-    //   this.destinationPath('.babelrc')
-    // );
-    // this.fs.copy(
-    //   this.templatePath('webpack_tmpl'),
-    //   this.destinationPath('webpack.config.js')
-    // );
+    pkg.keywords = pkg.keywords || [];
+    pkg.keywords.push('generator-jiewj-webpack');
+
+    pkg.name = this.props.projectName;
+    pkg.description = this.props.projectDesc;
+    pkg.main = this.props.projectMain;
+    pkg.author = this.props.projectAuthor;
+    pkg.license = this.props.projectLicense;
+
+    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+
+    this.fs.copy(
+      this.templatePath('config'),
+      this.destinationPath('config')
+    );
+    this.fs.copy(
+      this.templatePath('gitignore_tmpl'),
+      this.destinationPath('.gitignore')
+    );
+    this.fs.copy(
+      this.templatePath('babelrc_tmpl'),
+      this.destinationPath('.babelrc')
+    );
+    this.fs.copy(
+      this.templatePath('webpack_tmpl'),
+      this.destinationPath('webpack.config.js')
+    );
   }
 
   install() {
