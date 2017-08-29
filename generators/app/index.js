@@ -54,6 +54,7 @@ module.exports = class extends Generator {
     mkdirp('src');
     let readmeTpl = _.template(this.fs.read(this.templatePath('README.md')));
     this.fs.write(this.destinationPath('readmeTest.md'), readmeTpl({
+      projectName: this.props.projectName,
       generatorName: 'generator-jiewj-webpack',
       yoName: 'jiewj-webpack'
     }));
@@ -88,7 +89,7 @@ module.exports = class extends Generator {
       this.destinationPath('.babelrc')
     );
     this.fs.copy(
-      this.templatePath('webpack_tmpl'),
+      this.templatePath('webpack_tmpl.js'),
       this.destinationPath('webpack.config.js')
     );
   }

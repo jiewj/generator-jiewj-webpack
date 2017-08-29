@@ -11,7 +11,7 @@ describe('generator-jiewj-webpack:app', () => {
 
   it('creates files', () => {
     assert.file([
-      'dummyfile.txt'
+      'index_tmpl.html'
     ]);
   });
 });
