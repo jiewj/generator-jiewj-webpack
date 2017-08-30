@@ -17,7 +17,7 @@
     "start": "npm run serve:dev"
   },
   "author": "",
-  "license": "",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^8.0.17",
     "babel-core": "^6.25.0",

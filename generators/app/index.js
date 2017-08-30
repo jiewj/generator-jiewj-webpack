@@ -18,7 +18,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'projectName',
         message: 'Your project name',
-        default: this.appname // Default to current folder
+        default: this.appname.replace(' ','-') // Default to current folder
       },
       {
         type: 'input',
@@ -37,12 +37,6 @@ module.exports = class extends Generator {
         name: 'projectAuthor',
         message: 'Author(jiewj)',
         default: 'jiewj'
-      },
-      {
-        type: 'list',
-        name: 'projectLicense',
-        message: 'Please choose license:',
-        choices: ['MIT', 'ISC', 'Apache-2.0', 'AGPL-3.0']
       }];
 
     return this.prompt(prompts).then(props => {
@@ -54,16 +48,26 @@ module.exports = class extends Generator {
   writing() {
     mkdirp('src');
     let readmeTpl = _.template(this.fs.read(this.templatePath('README.md')));
-    this.fs.write(this.destinationPath('readmeTest.md'), readmeTpl({
+    this.fs.write(this.destinationPath('README.md'), readmeTpl({
       projectName: this.props.projectName,
       generatorName: 'generator-jiewj-webpack',
       yoName: 'jiewj-webpack'
+    }));
+
+    let date = new Date;
+    let licenseTpl = _.template(this.fs.read(this.templatePath('LICENSE')));
+    this.fs.write(this.destinationPath('LICENSE'), licenseTpl({
+      year: date.getFullYear(),
+      author: this.props.projectAuthor
     }));
 
     let indexTpl = _.template(this.fs.read(this.templatePath('index_tmpl.html')));
     this.fs.write(this.destinationPath('src/index.html'), indexTpl({
       title: this.props.projectName
     }));
+
+
+
     let pkg = this.fs.readJSON(this.templatePath('package_tmpl.json'));
 
     pkg.keywords = pkg.keywords || [];
@@ -74,6 +78,7 @@ module.exports = class extends Generator {
     pkg.main = this.props.projectMain;
     pkg.author = this.props.projectAuthor;
     pkg.license = this.props.projectLicense;
+    pkg.repository.url = `https://github.com/${pkg.author}/${pkg.name}.git`;
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
