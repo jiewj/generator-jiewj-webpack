@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "keywords": [],
   "scripts": {
     "clean": "rimraf dist/*",

@@ -23,7 +23,8 @@ module.exports = class extends Generator {
       {
         type: 'input',
         name: 'projectDesc',
-        message: 'Please input project description:'
+        message: 'Please input project description:',
+        default: this.appname
       },
       {
         type: 'input',
