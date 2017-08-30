@@ -36,7 +36,6 @@ class WebpackDevConfig extends WebpackBaseConfig {
         new webpack.HotModuleReplacementPlugin(),
         new htmlWebpackPlugin({
           template: 'index.html',
-          inject: 'head'
         })
         // new webpack.optimize.CommonsChunkPlugin({
         //   name: 'vendor',
