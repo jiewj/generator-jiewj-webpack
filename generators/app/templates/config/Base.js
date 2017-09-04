@@ -11,6 +11,10 @@ class WebpackBaseConfig {
     return this._config;
   }
 
+  get config(){
+    return this._config;
+  }
+
   get env() {
     return 'dev';
   }
