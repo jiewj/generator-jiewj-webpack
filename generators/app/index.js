@@ -77,7 +77,6 @@ module.exports = class extends Generator {
     pkg.description = this.props.projectDesc;
     pkg.main = this.props.projectMain;
     pkg.author = this.props.projectAuthor;
-    pkg.license = this.props.projectLicense;
     pkg.repository.url = `https://github.com/${pkg.author}/${pkg.name}.git`;
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
