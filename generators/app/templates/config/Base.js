@@ -46,6 +46,12 @@ class WebpackBaseConfig {
             use: ['babel-loader']
           },
           {
+            enforce: 'pre',
+            test: /\.ts?$/,
+            include: WebpackBaseConfig.srcPathAbsolute,
+            loader: 'babel-loader!ts-loader'
+          },
+          {
             test: /\.css$/,
             use: [
               {loader: 'style-loader'},
@@ -90,7 +96,7 @@ class WebpackBaseConfig {
         alias: {
           config: `${WebpackBaseConfig.srcPathAbsolute}/config/${this.env}.js`
         },
-        extensions: ['.js', '.json'],
+        extensions: ['.js','.ts', '.json'],
         modules: [
           WebpackBaseConfig.srcPathAbsolute,
           'node_modules'

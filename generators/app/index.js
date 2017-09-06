@@ -97,6 +97,10 @@ module.exports = class extends Generator {
       this.templatePath('webpack_tmpl.js'),
       this.destinationPath('webpack.config.js')
     );
+    this.fs.copy(
+      this.templatePath('tsconfig.json'),
+      this.destinationPath('tsconfig.json')
+    );
   }
 
   install() {
