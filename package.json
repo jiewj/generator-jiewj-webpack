@@ -50,6 +50,5 @@
       "node": true
     }
   },
-  "repository": "jiewj/generator-jiewj-webpack",
   "license": "MIT"
 }

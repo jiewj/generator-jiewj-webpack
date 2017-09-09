@@ -18,7 +18,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'projectName',
         message: 'Your project name',
-        default: this.appname.replace(' ','-') // Default to current folder
+        default: this.appname.replace(/ /g, '-') // Default to current folder
       },
       {
         type: 'input',
@@ -37,6 +37,12 @@ module.exports = class extends Generator {
         name: 'projectAuthor',
         message: 'Author(jiewj)',
         default: 'jiewj'
+      },
+      {
+        type: 'input',
+        name: 'typeScript',
+        message: 'typescript?(y/n)',
+        default: 'y'
       }];
 
     return this.prompt(prompts).then(props => {
@@ -67,7 +73,6 @@ module.exports = class extends Generator {
     }));
 
 
-
     let pkg = this.fs.readJSON(this.templatePath('package_tmpl.json'));
 
     pkg.keywords = pkg.keywords || [];
@@ -78,7 +83,39 @@ module.exports = class extends Generator {
     pkg.main = this.props.projectMain;
     pkg.author = this.props.projectAuthor;
     pkg.repository.url = `https://github.com/${pkg.author}/${pkg.name}.git`;
+    pkg.dependencies = {
+      "babel-core": "^6.25.0",
+      "babel-loader": "^7.1.1",
+      "babel-plugin-transform-runtime": "^6.23.0",
+      "babel-preset-es2015": "^6.24.1",
+      "babel-preset-stage-0": "^6.24.1",
+      "copyfiles": "^1.2.0",
+      "css-loader": "^0.28.4",
+      "file-loader": "^0.11.2",
+      "html-webpack-plugin": "^2.29.0",
+      "node-sass": "^4.5.3",
+      "postcss-loader": "^2.0.6",
+      "postcss-pxtorem": "^4.0.1",
+      "rimraf": "^2.6.1",
+      "sass-loader": "^6.0.6",
+      "style-loader": "^0.18.2",
+      "webpack": "^3.4.1"
+    };
+    pkg.devDependencies = {
+      "webpack-dev-server": "^2.6.1",
+    };
 
+    if (this.props.typeScript == 'y') {
+      pkg.dependencies = Object.assign({}, pkg.dependencies, {
+        "@types/node": "^8.0.17",
+        "ts-loader": "^2.3.2",
+        "typescript": "^2.4.2"
+      });
+      this.fs.copy(
+        this.templatePath('tsconfig.json'),
+        this.destinationPath('tsconfig.json')
+      );
+    }
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
     this.fs.copy(
@@ -97,10 +134,7 @@ module.exports = class extends Generator {
       this.templatePath('webpack_tmpl.js'),
       this.destinationPath('webpack.config.js')
     );
-    this.fs.copy(
-      this.templatePath('tsconfig.json'),
-      this.destinationPath('tsconfig.json')
-    );
+
   }
 
   install() {
