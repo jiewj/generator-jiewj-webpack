@@ -4,27 +4,29 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBaseConfig = require('./Base');
 
 class WebpackDevConfig extends WebpackBaseConfig {
-  constructor(){
+  constructor() {
     super();
     this.config = {
       devtool: 'cheap-module-source-map',
-      entry:[
-        'webpack-dev-server/client?http://0.0.0.0:8000/',
-        'webpack/hot/only-dev-server',
-        './index.js'
+      entry: {
+        index: [
+          'webpack-dev-server/client?http://0.0.0.0:8000/',
+          'webpack/hot/only-dev-server',
+          './index.js'
+        ],
         // vendor:'moment'
-      ],
-      devServer:{
-        contentBase:'./src',
+      },
+      devServer: {
+        contentBase: './src',
         // publicPath:'/assets/',
         // clientLogLevel:'none',
         // noInfo: true,
-        historyApiFallback:true,
+        historyApiFallback: true,
         hot: true,
-        inline:true,
-        host:'0.0.0.0',
-        port:8000,
-        disableHostCheck:true,
+        inline: true,
+        host: '0.0.0.0',
+        port: 8000,
+        disableHostCheck: true,
         // proxy:{
         //   'api':{
         //     target: '',// 服务器地址
@@ -32,7 +34,7 @@ class WebpackDevConfig extends WebpackBaseConfig {
         //   }
         // }
       },
-      plugins:[
+      plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new htmlWebpackPlugin({
           template: 'index.html',

@@ -5,7 +5,7 @@ module.exports = {
   plugins: {
     //   'postcss-cssnext':{},
     'autoprefixer': {
-      browsers: 'Safari > 5'
+      browsers: 'last 2 version' //,Safari > 5
     },
     // 'cssnano':{},
     'postcss-pxtorem': {

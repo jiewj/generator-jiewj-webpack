@@ -25,11 +25,11 @@ class WebpackBaseConfig {
 
   get defaultSettings() {
     const cssModulesQuery = {
-      modules: true,
-      importLoaders: 2,
-      localIndentName: '[name]-[local]-[hash:base64:5]',
+      // modules: true,
+      // importLoaders: 2,
+      // localIndentName: '[name]-[local]-[hash:base64:5]',
       sourceMap: true,
-      minimize: true
+      // minimize: true
     };
 
     return {
@@ -80,6 +80,10 @@ class WebpackBaseConfig {
               },
               {loader: 'sass-loader'}
             ]
+          },
+          {
+            test:/\.(png|jpg)$/,
+            use:['file-loader']
           }
         ]
       },
