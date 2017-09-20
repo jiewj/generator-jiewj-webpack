@@ -53,6 +53,7 @@ module.exports = class extends Generator {
 
   writing() {
     mkdirp('src');
+
     let readmeTpl = _.template(this.fs.read(this.templatePath('README.md')));
     this.fs.write(this.destinationPath('README.md'), readmeTpl({
       projectName: this.props.projectName,
@@ -91,6 +92,7 @@ module.exports = class extends Generator {
       "babel-preset-stage-0": "^6.24.1",
       "copyfiles": "^1.2.0",
       "css-loader": "^0.28.4",
+      "extract-text-webpack-plugin": "^3.0.0",
       "file-loader": "^0.11.2",
       "html-webpack-plugin": "^2.29.0",
       "node-sass": "^4.5.3",
@@ -99,6 +101,7 @@ module.exports = class extends Generator {
       "rimraf": "^2.6.1",
       "sass-loader": "^6.0.6",
       "style-loader": "^0.18.2",
+      "url-loader": "^0.5.9",
       "webpack": "^3.4.1"
     };
     pkg.devDependencies = {

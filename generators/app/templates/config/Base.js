@@ -1,5 +1,6 @@
 'use strict';
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 class WebpackBaseConfig {
   constructor() {
@@ -64,26 +65,32 @@ class WebpackBaseConfig {
           },
           {
             test: /\.scss$/,
-            use: [
-              {loader: 'style-loader'},
-              {
-                loader: 'css-loader',
-                options: cssModulesQuery
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  config: {
-                    path: './config/postcss.config.js'
+            use: ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: [
+                {
+                  loader: 'css-loader',
+                  options: cssModulesQuery
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    config: {
+                      path: './config/postcss.config.js'
+                    }
                   }
-                }
-              },
-              {loader: 'sass-loader'}
-            ]
+                },
+                {loader: 'sass-loader'}
+              ]
+            })
           },
           {
-            test:/\.(png|jpg)$/,
-            use:['file-loader']
+            test: /\.(png|jpg)$/,
+            use: ['url-loader?limit=8192']
+          },
+          {
+            test: /\.(eot|svg|ttf|woff)$/,
+            use: ['file-loader']
           }
         ]
       },
